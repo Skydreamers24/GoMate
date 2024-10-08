@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "229542730082",
+    "project_id": "gomate-d9ae0",
+    "storage_bucket": "gomate-d9ae0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:229542730082:android:631d56e3299d98f6dcf43b",
+        "android_client_info": {
+          "package_name": "com.skydreamers.GoMate"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCylw4U60qZWE7GNkMcRG6MlZZk4EY8keY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
