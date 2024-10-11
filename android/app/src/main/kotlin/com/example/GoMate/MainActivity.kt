@@ -1,4 +1,4 @@
-package com.example.gomate
+package com.skydreamers.GoMate
 
 import io.flutter.embedding.android.FlutterActivity
 
