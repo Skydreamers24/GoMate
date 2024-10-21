@@ -334,6 +334,7 @@ class _ProfileImageEditBoxState extends State<ProfileImageEditBox> {
           Padding(
             padding: comfortable,
             child: ProfileImage(
+              heroTag: "profileImage",
               profileImage: widget.profileImage,
             ),
           ),
