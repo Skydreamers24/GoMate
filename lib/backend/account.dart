@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gomate/backend/auth_gate.dart';
+import 'package:gomate/misc/disability.dart';
 import 'package:gomate/misc/gender.dart';
 import 'package:gomate/misc/name.dart';
 
@@ -42,6 +43,10 @@ class Account extends StatelessWidget {
           if (dateOfBirth.year < 1900) {
             dateOfBirth = null;
           }
+          Set<Disability> disabilities = ((data["disabilities"] ?? const [])
+                  as List<dynamic>)
+              .map((disability) => Disability.fromString(disability as String))
+              .toSet();
 
           var newAccountData = AccountData(
             uid: authInfo.uid,
@@ -52,6 +57,7 @@ class Account extends StatelessWidget {
             gender: Gender.fromString((data["gender"] ?? "Male") as String),
             phoneNo: (data["phoneNo"] ?? "") as String,
             profileImage: (data["profileImage"] ?? "") as String,
+            disabilities: disabilities,
             child: child,
           );
 
@@ -68,6 +74,7 @@ class AccountData extends InheritedWidget {
   final DateTime? dateOfBirth;
   final String email;
   final String phoneNo;
+  final Set<Disability> disabilities;
 
   int get age =>
       (DateTime.now().difference(dateOfBirth ?? DateTime.now()).inDays / 365.25)
@@ -82,16 +89,12 @@ class AccountData extends InheritedWidget {
       this.email = "",
       this.phoneNo = "",
       this.profileImage = "",
+      this.disabilities = const {},
       super.child = const Placeholder()});
 
   AccountData copyWithEmpty() {
     return AccountData(
-      name: const Name("", ""),
       dateOfBirth: DateTime.now(),
-      gender: Gender.male,
-      email: "",
-      phoneNo: "",
-      profileImage: "",
       uid: uid,
     );
   }
@@ -105,10 +108,8 @@ class AccountData extends InheritedWidget {
       String? email,
       String? phoneNo,
       String? profileImage,
-      Widget? child,
-      (DateTime, String)? currentReport,
-      List<(DateTime, String, String)>? reportHistoryArray,
-      List<String>? pendingReportCodeArray}) {
+      Set<Disability>? disabilities,
+      Widget? child}) {
     return AccountData(
       uid: uid ?? this.uid,
       name: name ?? this.name,
@@ -117,6 +118,7 @@ class AccountData extends InheritedWidget {
       email: email ?? this.email,
       phoneNo: phoneNo ?? this.phoneNo,
       profileImage: profileImage ?? this.profileImage,
+      disabilities: disabilities ?? this.disabilities,
       child: child ?? this.child,
     );
   }
@@ -124,6 +126,8 @@ class AccountData extends InheritedWidget {
   Future<Map<String, dynamic>> toMap() async {
     Timestamp dateOfBirthConverted =
         Timestamp.fromDate(dateOfBirth ?? DateTime.now());
+    List<String> disabilitiesConverted =
+        disabilities.map((disability) => disability.toString()).toList();
     return {
       "givenName": name.given,
       "familyName": name.family,
@@ -132,6 +136,7 @@ class AccountData extends InheritedWidget {
       "email": email,
       "phoneNo": phoneNo,
       "profileImage": profileImage,
+      "disabilities": disabilitiesConverted,
     };
   }
 
@@ -143,6 +148,7 @@ class AccountData extends InheritedWidget {
         dateOfBirth != oldWidget.dateOfBirth ||
         email != oldWidget.email ||
         phoneNo != oldWidget.phoneNo ||
+        disabilities != oldWidget.disabilities ||
         uid != oldWidget.uid;
   }
 }
