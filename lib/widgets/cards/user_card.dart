@@ -90,6 +90,7 @@ class _UserCardBackState extends State<UserCardBack> {
                     Padding(
                       padding: const EdgeInsets.all(8),
                       child: ProfileImage(
+                        heroTag: "profileImage",
                         profileImage: account.profileImage,
                       ),
                     ),
