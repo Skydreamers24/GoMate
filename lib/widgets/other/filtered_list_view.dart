@@ -17,6 +17,7 @@ class FilteredListView<T> extends StatefulWidget {
   final List<ListFilter<T>> filters;
   final List<SortOption<T>> sortOptions;
   final List<T> data;
+  final ScrollController? scrollController;
   final Widget Function(T)? builder;
 
   const FilteredListView(
@@ -25,6 +26,7 @@ class FilteredListView<T> extends StatefulWidget {
       this.filters = const [],
       this.searchFilter,
       this.builder,
+      this.scrollController,
       this.sortOptions = const []});
 
   @override
@@ -78,6 +80,7 @@ class _FilteredListViewState<T> extends State<FilteredListView<T>> {
   @override
   Widget build(BuildContext context) {
     final dimensions = Adaptive.of(context).dimensions;
+    final theme = Theme.of(context);
     final filterChips = [
       for (var filter in widget.filters)
         Padding(
@@ -104,6 +107,9 @@ class _FilteredListViewState<T> extends State<FilteredListView<T>> {
             padding: spacious.copyWith(bottom: 8),
             child: SearchAnchor.bar(
               barHintText: "Tap to search",
+              barBackgroundColor:
+                  WidgetStatePropertyAll(theme.colorScheme.surfaceContainerLow),
+              barElevation: const WidgetStatePropertyAll(0),
               suggestionsBuilder: (context, controller) {
                 if (widget.builder == null) {
                   return const [];
@@ -163,11 +169,15 @@ class _FilteredListViewState<T> extends State<FilteredListView<T>> {
     );
     return Scaffold(
       extendBody: true,
-      endDrawer: Drawer(child: searchAndFilterWidget,),
+      endDrawer: Drawer(
+        backgroundColor: theme.colorScheme.surfaceContainerHigh,
+        child: searchAndFilterWidget,
+      ),
       endDrawerEnableOpenDragGesture: false,
       body: SizedBox(
         height: MediaQuery.sizeOf(context).height,
         child: ListView.separated(
+            controller: widget.scrollController,
             shrinkWrap: true,
             itemBuilder: (context, index) => widget.builder != null
                 ? widget.builder!(selectedData[index])
@@ -193,6 +203,7 @@ class _FilteredListViewState<T> extends State<FilteredListView<T>> {
               child: BottomAppBar(
                 height: 210,
                 padding: comfortableVertical.copyWith(top: 0),
+                color: theme.colorScheme.surfaceContainerHighest,
                 child: searchAndFilterWidget,
               ),
             ),

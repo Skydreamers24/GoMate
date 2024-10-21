@@ -20,6 +20,7 @@ class DismissibleListRow extends StatefulWidget {
 
 class _DismissibleListRowState extends State<DismissibleListRow> {
   DismissDirection dismissDirection = DismissDirection.none;
+  bool isBeingDismissed = false;
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +30,15 @@ class _DismissibleListRowState extends State<DismissibleListRow> {
             key: widget.dismissibleKey,
             onUpdate: (details) {
               setState(() {
+                isBeingDismissed = details.progress != 0;
                 dismissDirection = details.direction;
               });
             },
             onDismissed: (direction) {
               widget.remove!();
             },
-            background: Container(
+            background: Material(
+              elevation: 3,
               color: theme.colorScheme.errorContainer,
               child: Row(
                 children: [
@@ -73,7 +76,7 @@ class RemoveIconText extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
-                Icons.delete,
+                Icons.delete_outline_rounded,
                 color: color,
               ),
               const SizedBox(

@@ -4,11 +4,19 @@ import 'package:gomate/widgets/other/tappable.dart';
 
 class ContentCard extends StatelessWidget {
   final Widget? child;
+  final double? width;
+  final double? height;
   final Clip? clipBehavior;
   final EdgeInsets? padding;
   final void Function()? onTap;
   const ContentCard(
-      {super.key, this.child, this.clipBehavior, this.padding, this.onTap});
+      {super.key,
+      this.child,
+      this.width,
+      this.height,
+      this.clipBehavior,
+      this.padding,
+      this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +32,10 @@ class ContentCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(isTapped ? 50 : 20),
               color: isTapped || isHovering
                   ? theme.colorScheme.secondaryContainer
-                  : theme.colorScheme.surfaceContainerHighest),
+                  : theme.colorScheme.surfaceContainer),
           child: Padding(
             padding: padding ?? zero,
-            child: child,
+            child: SizedBox(width: width, height: height, child: child),
           )),
     );
   }

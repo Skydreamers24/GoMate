@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:gomate/misc/theme.dart';
 import 'package:gomate/misc/values.dart';
 import 'package:gomate/pages/account_page.dart';
@@ -85,9 +84,6 @@ class _MainAppState extends State<MainApp> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        systemNavigationBarColor: Colors.transparent));
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     return ThemedApp(
       home: Adaptive(
         horizontal: MainAppHorizontal(
@@ -123,40 +119,51 @@ class _MainAppHorizontalState extends State<MainAppHorizontal> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
+        backgroundColor: theme.colorScheme.surfaceContainerHigh,
         body: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints:
-                BoxConstraints(minHeight: MediaQuery.sizeOf(context).height),
-            child: IntrinsicHeight(
-              child: NavigationRail(
-                groupAlignment: 0,
-                extended: Adaptive.of(context).dimensions.isWider,
-                destinations: [
-                  for (final page in AppPage.values)
-                    NavigationRailDestination(
-                        icon: page.icon(false, theme),
-                        selectedIcon: page.icon(true, theme),
-                        label: Text(page.toString()))
-                ],
-                selectedIndex: widget.page.index,
-                onDestinationSelected: (value) {
-                  widget.changePage(value);
-                },
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                    minHeight: MediaQuery.sizeOf(context).height),
+                child: IntrinsicHeight(
+                  child: NavigationRail(
+                    backgroundColor: theme.colorScheme.surfaceContainerHigh,
+                    groupAlignment: 0,
+                    extended: Adaptive.of(context).dimensions.isWider,
+                    destinations: [
+                      for (final page in AppPage.values)
+                        NavigationRailDestination(
+                            icon: page.icon(false, theme),
+                            selectedIcon: page.icon(true, theme),
+                            label: Text(page.toString()))
+                    ],
+                    selectedIndex: widget.page.index,
+                    onDestinationSelected: (value) {
+                      widget.changePage(value);
+                    },
+                  ),
+                ),
               ),
             ),
-          ),
-        ),
-        Expanded(
-            child: IndexedStack(
-          index: widget.page.index,
-          children: widget.pageContents,
-        ))
-      ],
-    ));
+            Expanded(
+                child: ClipRRect(
+              borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  bottomLeft: Radius.circular(20)),
+              child: Container(
+                height: MediaQuery.sizeOf(context).height,
+                decoration: BoxDecoration(color: theme.colorScheme.surface),
+                child: IndexedStack(
+                  index: widget.page.index,
+                  children: widget.pageContents,
+                ),
+              ),
+            ))
+          ],
+        ));
   }
 }
 
@@ -183,6 +190,7 @@ class _MainAppVerticalState extends State<MainAppVertical> {
           children: widget.pageContents,
         ),
         bottomNavigationBar: NavigationBar(
+            backgroundColor: theme.colorScheme.surfaceContainerHighest,
             destinations: [
               for (var page in AppPage.values)
                 NavigationDestination(

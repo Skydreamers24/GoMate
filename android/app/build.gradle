@@ -10,7 +10,7 @@ plugins {
 
 android {
     namespace = "com.skydreamers.GoMate"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk 35
     ndkVersion = flutter.ndkVersion
 
     compileOptions {

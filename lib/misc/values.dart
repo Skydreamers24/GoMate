@@ -122,3 +122,8 @@ extension IsNothing on Widget {
     return key == nothingKey;
   }
 }
+
+extension IsBrightness on ThemeData {
+  bool get isLightMode => brightness == Brightness.light;
+  bool get isDarkMode => brightness == Brightness.dark;
+}

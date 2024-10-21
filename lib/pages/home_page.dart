@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gomate/misc/show_popup.dart';
 import 'package:gomate/misc/values.dart';
 import 'package:gomate/pages/page_content.dart';
+import 'package:gomate/widgets/cards/content_card.dart';
+import 'package:gomate/widgets/other/chart.dart';
 import 'package:gomate/widgets/other/hero_banner.dart';
 import 'package:gomate/widgets/other/image_frame.dart';
 
@@ -8,26 +11,50 @@ class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   static List<Widget> widgets(BuildContext context) {
+    final theme = Theme.of(context);
+    const banners = [
+      HeroBanner(
+        image:
+            "https://hips.hearstapps.com/hmg-prod/images/plant-guide-1663941701.jpg",
+        title: "Plants",
+        padding: spacious,
+      ),
+      HeroBanner(
+        image:
+            "https://idthefuture.com/wp-content/uploads/sites/4/2023/07/humpback-whale-flipper-scaled.jpg",
+        title: "Whale",
+        padding: spacious,
+      ),
+      HeroBanner(
+        image:
+            "http://www.baltana.com/files/wallpapers-2/Cute-Cat-Images-07756.jpg",
+        title: "Cat",
+        padding: spacious,
+      )
+    ];
     return [
-      const SizedBox(
+      SizedBox(
         height: 200,
-        child: CarouselView.weighted(flexWeights: [3, 2, 1], children: [
-          HeroBanner(
-            image: "https://hips.hearstapps.com/hmg-prod/images/plant-guide-1663941701.jpg",
-            title: "Plants",
-            padding: spacious,
+        child: CarouselView.weighted(
+            flexWeights: const [3, 2, 1],
+            children: banners,
+            onTap: (index) => showPopup(context,
+                sheet: (context) => SizedBox(
+                      height: 400,
+                      child: banners[index],
+                    ))()),
+      ),
+      ContentCard(
+        height: 180,
+        child: Padding(
+          padding: comfortable,
+          child: CustomPieChart(
+            otherColor: theme.isLightMode
+                ? darker(theme.colorScheme.surfaceContainerHighest)
+                : lighter(theme.colorScheme.surfaceContainerHighest),
+            data: const [("Data1", 30), ("Data2", 20), ("Data3", 10)],
           ),
-          HeroBanner(
-            image: "https://idthefuture.com/wp-content/uploads/sites/4/2023/07/humpback-whale-flipper-scaled.jpg",
-            title: "Whale",
-            padding: spacious,
-          ),
-          HeroBanner(
-            image: "http://www.baltana.com/files/wallpapers-2/Cute-Cat-Images-07756.jpg",
-            title: "Cat",
-            padding: spacious,
-          )
-        ]),
+        ),
       )
     ];
   }

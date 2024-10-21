@@ -182,11 +182,13 @@ class CustomPieChart extends StatefulWidget {
       this.tappedSectionRadius = 40,
       this.defaultRadius = 30,
       this.adaptiveData,
-      this.color = Colors.teal});
+      this.color = Colors.teal,
+      this.otherColor = Colors.grey});
 
   final List<(String, double)> data;
   final int show;
   final MaterialColor color;
+  final Color otherColor;
   final double tappedSectionRadius;
   final double defaultRadius;
   final AdaptiveData? adaptiveData;
@@ -326,7 +328,7 @@ class _CustomPieChartState extends State<CustomPieChart> {
               : widget.defaultRadius,
         ),
       PieChartSectionData(
-        color: Colors.grey,
+        color: widget.otherColor,
         value: othersValue,
         title: "",
         radius: widget.defaultRadius,
