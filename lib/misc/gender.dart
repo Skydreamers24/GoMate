@@ -30,8 +30,6 @@ enum Gender {
         return "Other";
       case Gender.ratherNotSay:
         return "Rather not say";
-      default:
-        return "";
     }
   }
 }
