@@ -3,10 +3,11 @@ import 'package:gomate/misc/theme.dart';
 import 'package:gomate/misc/values.dart';
 import 'package:gomate/pages/account_page.dart';
 import 'package:gomate/pages/home_page.dart';
+import 'package:gomate/pages/search_page.dart';
 import 'package:gomate/widgets/other/adaptive.dart';
 
 enum AppPage {
-  home, account;
+  home, account, search;
 
   @override
   String toString() {
@@ -15,6 +16,8 @@ enum AppPage {
         return "Home";
       case account:
         return "Account";
+      case search:
+        return "Search";
       default:
         return "";
     }
@@ -26,6 +29,8 @@ enum AppPage {
         case home:
           return isActive ? Icons.home : Icons.home_outlined;
         case account:
+          return isActive ? Icons.person_rounded: Icons.person_outline_rounded;
+        case search:
           return isActive ? Icons.person_rounded: Icons.person_outline_rounded;
         default:
           return isActive ? Icons.home : Icons.home_outlined;
@@ -43,6 +48,8 @@ enum AppPage {
         return const HomePage();
       case account:
         return const AccountPage();
+      case search:
+        return const SearchPage();
       default:
         return const Placeholder();
     }
@@ -74,6 +81,9 @@ class _MainAppState extends State<MainApp> {
           break;
         case 1:
           page = AppPage.account;
+          break;
+        case 2:
+          page = AppPage.search;
           break;
         default:
           page = AppPage.home;

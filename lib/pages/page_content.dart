@@ -29,7 +29,7 @@ class PageContent extends StatelessWidget {
       this.safeAreaBottom = false})
       : titleWidget = null;
 
-  const PageContent.withTitleWidget(
+  const PageContent.withTitleWidget( 
       {super.key,
       this.titleWidget,
       this.titlePadding,
