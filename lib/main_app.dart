@@ -4,16 +4,19 @@ import 'package:gomate/misc/values.dart';
 import 'package:gomate/pages/account_page.dart';
 import 'package:gomate/pages/home_page.dart';
 import 'package:gomate/pages/search_page.dart';
+import 'package:gomate/pages/plan_page.dart';
 import 'package:gomate/widgets/other/adaptive.dart';
 
 enum AppPage {
-  home, account, search;
+  home, plan, account, search;
 
   @override
   String toString() {
     switch (this) {
       case home:
         return "Home";
+      case plan:
+        return "Plan";
       case account:
         return "Account";
       case search:
@@ -28,6 +31,8 @@ enum AppPage {
       switch (this) {
         case home:
           return isActive ? Icons.home : Icons.home_outlined;
+        case plan:
+          return isActive ? Icons.search : Icons.search_outlined;
         case account:
           return isActive ? Icons.person_rounded: Icons.person_outline_rounded;
         case search:
@@ -46,6 +51,8 @@ enum AppPage {
     switch (this) {
       case home:
         return const HomePage();
+      case plan:
+        return const PlanPage();
       case account:
         return const AccountPage();
       case search:
@@ -75,20 +82,7 @@ class _MainAppState extends State<MainApp> {
 
   void changePage(int value) {
     setState(() {
-      switch (value) {
-        case 0:
-          page = AppPage.home;
-          break;
-        case 1:
-          page = AppPage.account;
-          break;
-        case 2:
-          page = AppPage.search;
-          break;
-        default:
-          page = AppPage.home;
-          break;
-      }
+      page = AppPage.values[value];
     });
   }
 
@@ -220,16 +214,13 @@ class ThemedApp extends StatelessWidget {
   const ThemedApp({super.key, this.home});
   @override
   Widget build(BuildContext context) {
-    final theme = MaterialTheme(createTextTheme(context, "Poppins", "Prata"));
     return MaterialApp(
-      title: title,
+      title: appName,
       debugShowCheckedModeBanner: debugShowCheckedModeBanner,
       localizationsDelegates: localizationsDelegates,
       supportedLocales: supportedLocales,
-      theme: theme.light(),
-      darkTheme: theme.dark(),
-      highContrastTheme: theme.lightHighContrast(),
-      highContrastDarkTheme: theme.darkHighContrast(),
+      theme: ThemeData.light(useMaterial3: true),
+      darkTheme: ThemeData.dark(useMaterial3: true),
       home: home,
     );
   }
