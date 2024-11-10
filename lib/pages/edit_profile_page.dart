@@ -51,6 +51,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     accountStaging["phoneNo"] = account.phoneNo;
     accountStaging["gender"] = account.gender;
     accountStaging["profileImage"] = account.profileImage;
+    accountStaging["disabilities"] = account.disabilities;
   }
 
   void setProfileImage(String profileImage) {
@@ -100,6 +101,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 ? ""
                 : null,
         accountStaging: accountStaging,
+      ),
+      const Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Icon(Icons.accessibility),
+          Text("Accessibility information")
+        ],
+      ),
+      DisabilitiesField(
+        accountStaging: accountStaging,
       )
     ];
   }
@@ -137,7 +149,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           gender: accountStaging["gender"],
                           profileImage: accountStaging["profileImage"],
                           age: accountStaging["age"],
-                          dateOfBirth: accountStaging["dateOfBirth"]));
+                          dateOfBirth: accountStaging["dateOfBirth"],
+                          disabilities: accountStaging["disabilities"]));
+
                       setDidSubmit(true);
                       widget.onSave();
                       if (widget.hasBackButton) {
@@ -216,13 +230,23 @@ class _EditProfilePageVerticalState extends State<EditProfilePageVertical> {
                     });
                   }),
             ),
-            Column(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                for (var widget in widget.widgets(context))
-                  Padding(
-                    padding: comfortableListChildren,
-                    child: widget,
-                  )
+                const Flexible(flex: 2, child: nothing),
+                Flexible(
+                  flex: 11,
+                  child: Column(
+                    children: [
+                      for (var widget in widget.widgets(context))
+                        Padding(
+                          padding: comfortableListChildren,
+                          child: widget,
+                        )
+                    ],
+                  ),
+                ),
+                const Flexible(flex: 2, child: nothing)
               ],
             )
           ],
@@ -288,13 +312,23 @@ class _EditProfilePageHorizontalState extends State<EditProfilePageHorizontal> {
                 ),
                 Flexible(
                   flex: 3,
-                  child: Column(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
                     children: [
-                      for (var widget in widget.widgets(context))
-                        Padding(
-                          padding: comfortableListChildren,
-                          child: widget,
-                        )
+                      const Flexible(flex: 2, child: nothing),
+                      Flexible(
+                        flex: 9,
+                        child: Column(
+                          children: [
+                            for (var widget in widget.widgets(context))
+                              Padding(
+                                padding: comfortableListChildren,
+                                child: widget,
+                              )
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 )

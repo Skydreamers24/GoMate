@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 enum Disability {
   hearing,
   mobility,
@@ -33,23 +35,28 @@ enum Disability {
 
   @override
   String toString() {
-    switch (this) {
-      case Disability.hearing:
-        return "Hearing";
-      case Disability.mobility:
-        return "Mobility";
-      case Disability.visual:
-        return "Visual";
-      case Disability.speech:
-        return "Speech";
-      case Disability.intellectual:
-        return "Intellectual";
-      case Disability.chronic:
-        return "Chronic Illness";
-      case Disability.allergy:
-        return "Allergy";
-      case Disability.none:
-        return "None";
-    }
+    return const {
+          Disability.mobility: "Mobility",
+          Disability.visual: "Visual",
+          Disability.hearing: "Hearing",
+          Disability.intellectual: "Intellectual",
+          Disability.allergy: "Allergy",
+          Disability.speech: "Speech",
+          Disability.chronic: "Chronic",
+        }[this] ??
+        "";
+  }
+
+  IconData icon() {
+    return const {
+          Disability.mobility: Icons.wheelchair_pickup_outlined,
+          Disability.visual: Icons.visibility_outlined,
+          Disability.hearing: Icons.volume_off_outlined,
+          Disability.intellectual: Icons.psychology_alt_outlined,
+          Disability.allergy: Icons.set_meal_outlined,
+          Disability.speech: Icons.speaker_notes_off,
+          Disability.chronic: Icons.running_with_errors,
+        }[this] ??
+        Icons.wheelchair_pickup_outlined;
   }
 }
