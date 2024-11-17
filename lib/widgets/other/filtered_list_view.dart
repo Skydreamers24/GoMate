@@ -13,6 +13,7 @@ class ListFilter<T> {
 }
 
 class FilteredListView<T> extends StatefulWidget {
+  final bool addSeparator;
   final ListFilter<(String, T)>? searchFilter;
   final List<ListFilter<T>> filters;
   final List<SortOption<T>> sortOptions;
@@ -22,6 +23,7 @@ class FilteredListView<T> extends StatefulWidget {
 
   const FilteredListView(
       {super.key,
+      this.addSeparator = true,
       this.data = const [],
       this.filters = const [],
       this.searchFilter,
@@ -182,7 +184,7 @@ class _FilteredListViewState<T> extends State<FilteredListView<T>> {
             itemBuilder: (context, index) => widget.builder != null
                 ? widget.builder!(selectedData[index])
                 : nothing,
-            separatorBuilder: (context, index) => const CustomDivider(),
+            separatorBuilder: (context, index) => widget.addSeparator ? const CustomDivider() : nothing,
             itemCount: selectedData.length),
       ),
       floatingActionButton: dimensions.isWide

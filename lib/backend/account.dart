@@ -59,6 +59,10 @@ class Account extends StatelessWidget {
             phoneNo: (data["phoneNo"] ?? "") as String,
             profileImage: (data["profileImage"] ?? "") as String,
             disabilities: disabilities,
+            plannedJourneyIds:
+                ((data["plannedJourneyIds"] ?? const []) as List<dynamic>)
+                    .map((id) => id as String)
+                    .toList(),
             child: child,
           );
 
@@ -76,6 +80,7 @@ class AccountData extends InheritedWidget {
   final String email;
   final String phoneNo;
   final Set<Disability> disabilities;
+  final List<String> plannedJourneyIds;
 
   int get age =>
       (DateTime.now().difference(dateOfBirth ?? DateTime.now()).inDays / 365.25)
@@ -91,6 +96,7 @@ class AccountData extends InheritedWidget {
       this.phoneNo = "",
       this.profileImage = "",
       this.disabilities = const {},
+      this.plannedJourneyIds = const [],
       super.child = const Placeholder()});
 
   AccountData copyWithEmpty() {
@@ -115,10 +121,8 @@ class AccountData extends InheritedWidget {
       String? phoneNo,
       String? profileImage,
       Widget? child,
-      (DateTime, String)? currentReport,
-      List<(DateTime, String, String)>? reportHistoryArray,
       Set<Disability>? disabilities,
-      List<String>? pendingReportCodeArray}) {
+      List<String>? plannedJourneyIds}) {
     return AccountData(
       uid: uid ?? this.uid,
       name: name ?? this.name,
@@ -128,6 +132,7 @@ class AccountData extends InheritedWidget {
       phoneNo: phoneNo ?? this.phoneNo,
       disabilities: disabilities ?? this.disabilities,
       profileImage: profileImage ?? this.profileImage,
+      plannedJourneyIds: plannedJourneyIds ?? this.plannedJourneyIds,
       child: child ?? this.child,
     );
   }
@@ -145,7 +150,8 @@ class AccountData extends InheritedWidget {
       "email": email,
       "phoneNo": phoneNo,
       "profileImage": profileImage,
-      "disabilities": disabilitiesConverted
+      "disabilities": disabilitiesConverted,
+      "plannedJourneyIds": plannedJourneyIds,
     };
   }
 
@@ -158,6 +164,7 @@ class AccountData extends InheritedWidget {
         email != oldWidget.email ||
         phoneNo != oldWidget.phoneNo ||
         disabilities != oldWidget.disabilities ||
+        plannedJourneyIds != oldWidget.plannedJourneyIds ||
         uid != oldWidget.uid;
   }
 }
