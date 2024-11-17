@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gomate/misc/journey.dart';
 import 'package:gomate/misc/show_popup.dart';
 import 'package:gomate/misc/values.dart';
-import 'package:gomate/pages/page_content.dart';
 import 'package:gomate/widgets/cards/content_card.dart';
 import 'package:gomate/widgets/other/auto_image.dart';
 import 'package:gomate/widgets/sheets/journey_detail_sheet.dart';

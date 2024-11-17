@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gomate/misc/theme.dart';
 import 'package:gomate/misc/values.dart';
 import 'package:gomate/pages/account_page.dart';
 import 'package:gomate/pages/home_page.dart';
@@ -21,9 +20,7 @@ enum AppPage {
         return "Account";
       case search:
         return "Search";
-      default:
-        return "";
-    }
+      }
   }
 
   Icon icon(bool isActive, ThemeData theme) {
@@ -37,9 +34,7 @@ enum AppPage {
           return isActive ? Icons.person_rounded: Icons.person_outline_rounded;
         case search:
           return isActive ? Icons.person_rounded: Icons.person_outline_rounded;
-        default:
-          return isActive ? Icons.home : Icons.home_outlined;
-      }
+        }
     }();
     return Icon(
       iconData,
@@ -57,9 +52,7 @@ enum AppPage {
         return const AccountPage();
       case search:
         return const SearchPage();
-      default:
-        return const Placeholder();
-    }
+      }
   }
 }
 

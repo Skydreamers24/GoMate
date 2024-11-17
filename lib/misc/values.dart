@@ -31,7 +31,8 @@ TextStyle title(BuildContext context) {
 
 TextStyle body(BuildContext context) {
   final theme = Theme.of(context);
-  final bodyMedium = theme.textTheme.bodyMedium ?? const TextStyle(color: Colors.black);
+  final bodyMedium =
+      theme.textTheme.bodyMedium ?? const TextStyle(color: Colors.black);
   return bodyMedium.copyWith(color: lessIntense(bodyMedium.color!, theme));
 }
 
@@ -100,7 +101,7 @@ Color foreground(Color background) =>
     background.computeLuminance() > 0.5 ? Colors.black : Colors.white;
 Color inverted(Color color) => Color.fromARGB(
     color.alpha, 255 - color.red, 255 - color.green, 255 - color.blue);
-    
+
 Color darker(Color color, [double amount = 0.3]) {
   assert(amount >= 0 && amount <= 1);
 
@@ -120,17 +121,11 @@ Color lighter(Color color, [double amount = 0.3]) {
 }
 
 Color moreIntense(Color color, ThemeData theme, [double amount = 0.3]) {
-  if (theme.isDarkMode) {
-    return lighter(color, amount);
-  }
-  return darker(color, amount);
+  return theme.isDarkMode ? lighter(color, amount) : darker(color, amount);
 }
 
 Color lessIntense(Color color, ThemeData theme, [double amount = 0.3]) {
-  if (theme.isDarkMode) {
-    return darker(color, amount);
-  }
-  return lighter(color, amount);
+  return theme.isDarkMode ? darker(color, amount) : lighter(color, amount);
 }
 
 Color textColor(ThemeData theme) {
