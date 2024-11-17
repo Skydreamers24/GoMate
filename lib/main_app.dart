@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:gomate/misc/values.dart';
 import 'package:gomate/pages/account_page.dart';
 import 'package:gomate/pages/home_page.dart';
-import 'package:gomate/pages/search_page.dart';
 import 'package:gomate/pages/plan_page.dart';
 import 'package:gomate/widgets/other/adaptive.dart';
 
 enum AppPage {
-  home, plan, account, search;
+  home, plan, account;
 
   @override
   String toString() {
@@ -18,8 +17,6 @@ enum AppPage {
         return "Plan";
       case account:
         return "Account";
-      case search:
-        return "Search";
       }
   }
 
@@ -31,8 +28,6 @@ enum AppPage {
         case plan:
           return isActive ? Icons.search : Icons.search_outlined;
         case account:
-          return isActive ? Icons.person_rounded: Icons.person_outline_rounded;
-        case search:
           return isActive ? Icons.person_rounded: Icons.person_outline_rounded;
         }
     }();
@@ -50,8 +45,6 @@ enum AppPage {
         return const PlanPage();
       case account:
         return const AccountPage();
-      case search:
-        return const SearchPage();
       }
   }
 }

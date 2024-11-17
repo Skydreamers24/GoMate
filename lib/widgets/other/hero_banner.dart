@@ -5,7 +5,9 @@ import 'package:gomate/misc/values.dart';
 class HeroBanner extends StatelessWidget {
   final String? image;
   final String title;
+  final TextStyle? titleStyle;
   final String? subtitle;
+  final TextStyle? subtitleStyle;
   final EdgeInsets padding;
   final Widget? child;
   final double? childMaxHeight;
@@ -15,7 +17,9 @@ class HeroBanner extends StatelessWidget {
       {super.key,
       this.image,
       this.title = "",
+      this.titleStyle,
       this.subtitle,
+      this.subtitleStyle,
       this.fadeTo = Colors.black,
       this.padding = comfortable,
       this.childMaxHeight = 50,
@@ -62,10 +66,13 @@ class HeroBanner extends StatelessWidget {
                       children: [
                         Text(
                           title,
-                          style: TextStyle(
-                              color: foreground(fadeTo),
-                              fontWeight: FontWeight.bold,
-                              overflow: TextOverflow.ellipsis),
+                          style: (titleStyle ??
+                                  const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      overflow: TextOverflow.ellipsis))
+                              .copyWith(
+                            color: foreground(fadeTo),
+                          ),
                         ),
                         subtitle != null
                             ? OverflowBox(
@@ -73,8 +80,9 @@ class HeroBanner extends StatelessWidget {
                                 maxHeight: childMaxHeight,
                                 child: Text(
                                   subtitle!,
-                                  style: footnote(context).copyWith(
-                                      color: darker(foreground(fadeTo))),
+                                  style: (subtitleStyle ?? footnote(context))
+                                      .copyWith(
+                                          color: darker(foreground(fadeTo))),
                                   overflow: TextOverflow.fade,
                                 ),
                               )

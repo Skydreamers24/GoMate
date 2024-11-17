@@ -62,7 +62,6 @@ class HomePage extends StatelessWidget {
       const JourneyCard(
         journey: Journey(
             name: "Shopping",
-            icon: Icons.shopping_bag_rounded,
             description: "Shout out to capitalism",
             image:
                 "https://a.cdn-hotels.com/gdcs/production116/d593/d4e5cbfe-6d65-4abd-851b-222ff95a3b66.jpg",

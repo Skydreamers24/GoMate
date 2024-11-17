@@ -141,19 +141,25 @@ const localizationsDelegates = [
 const debugShowCheckedModeBanner = false;
 const appName = "GoMate";
 
-const nothingKey = Key("_nothing");
-const nothing = SizedBox.shrink(
-  key: nothingKey,
-);
-
-extension IsNothing on Widget {
-  // Does not work
-  bool get isNothing {
-    return key == nothingKey;
-  }
-}
+const nothing = SizedBox.shrink();
 
 extension IsBrightness on ThemeData {
   bool get isLightMode => brightness == Brightness.light;
   bool get isDarkMode => brightness == Brightness.dark;
+}
+
+extension SpacedOut on List<Widget> {
+  List<Widget> spacedOut({double by = 0, Axis direction = Axis.vertical}) {
+    return [
+      for (var (index, widget) in indexed)
+        index != length - 1
+            ? Padding(
+                padding: EdgeInsets.only(
+                    bottom: direction == Axis.vertical ? by : 0,
+                    right: direction == Axis.horizontal ? by : 0),
+                child: widget,
+              )
+            : widget
+    ];
+  }
 }

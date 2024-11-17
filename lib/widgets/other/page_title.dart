@@ -18,7 +18,7 @@ class PageTitle extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const PageStart(),
+          titleWidget == null ? const PageStart() : nothing,
           Padding(
             padding: padding ?? spacious,
             child: titleWidget ??
