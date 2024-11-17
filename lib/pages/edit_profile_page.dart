@@ -104,7 +104,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Icon(Icons.accessibility),
-          Text("Accessibility information")
+          Text("Disability information")
         ],
       ),
       DisabilitiesField(

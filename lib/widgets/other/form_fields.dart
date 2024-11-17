@@ -184,7 +184,7 @@ class _DisabilitiesFieldState extends State<DisabilitiesField> {
                           menuChildren: menuItemButtons,
                           builder: (context, controller, child) => ActionChip(
                             padding: zero,
-                            labelPadding: tight,
+                            labelPadding: const EdgeInsets.all(3),
                             shape: const CircleBorder(),
                             label: const Icon(Icons.add),
                             tooltip: "Add a disability",
