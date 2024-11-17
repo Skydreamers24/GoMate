@@ -25,26 +25,17 @@ class TextFormFieldRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Flexible(flex: 2, child: SizedBox()),
-        Flexible(
-            flex: 9,
-            child: TextFormField(
-              initialValue: accountStaging[valueToChange],
-              autocorrect: autocorrect,
-              decoration: InputDecoration(
-                border: const OutlineInputBorder(),
-                labelText: labelText,
-              ),
-              onChanged: (newValue) {
-                accountStaging[valueToChange] = newValue;
-              },
-              validator: validator,
-            )),
-        const Flexible(flex: 2, child: SizedBox())
-      ],
+    return TextFormField(
+      initialValue: accountStaging[valueToChange],
+      autocorrect: autocorrect,
+      decoration: InputDecoration(
+        border: const OutlineInputBorder(),
+        labelText: labelText,
+      ),
+      onChanged: (newValue) {
+        accountStaging[valueToChange] = newValue;
+      },
+      validator: validator,
     );
   }
 }
@@ -59,31 +50,22 @@ class EditGenderRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Flexible(flex: 2, child: SizedBox()),
-        Flexible(
-            flex: 9,
-            child: DropdownButtonFormField(
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: "Gender",
-              ),
-              items: Gender.values
-                  .map((gender) => DropdownMenuItem(
-                        value: gender,
-                        child: Text(gender.toString()),
-                      ))
-                  .toList(),
-              style: Theme.of(context).textTheme.bodyLarge,
-              value: accountStaging["gender"],
-              onChanged: (value) {
-                accountStaging["gender"] = value ?? Gender.male;
-              },
-            )),
-        const Flexible(flex: 2, child: SizedBox())
-      ],
+    return DropdownButtonFormField(
+      decoration: const InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: "Gender",
+      ),
+      items: Gender.values
+          .map((gender) => DropdownMenuItem(
+                value: gender,
+                child: Text(gender.toString()),
+              ))
+          .toList(),
+      style: Theme.of(context).textTheme.bodyLarge,
+      value: accountStaging["gender"],
+      onChanged: (value) {
+        accountStaging["gender"] = value ?? Gender.male;
+      },
     );
   }
 }
@@ -94,31 +76,21 @@ class EditDateOfBirthRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Flexible(flex: 2, child: SizedBox()),
-        Flexible(
-          flex: 9,
-          child: DateTimeFormField(
-            initialValue: accountStaging["dateOfBirth"],
-            pickerPlatform: DateTimeFieldPickerPlatform.material,
-            mode: DateTimeFieldPickerMode.date,
-            firstDate: DateTime.parse("1900-01-01"),
-            lastDate: DateTime.now(),
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: "Date of Birth",
-            ),
-            style: Theme.of(context).textTheme.bodyLarge,
-            onChanged: (DateTime? value) {
-              accountStaging["dateOfBirth"] =
-                  value ?? DateTime.parse("1899-12-31");
-            },
-          ),
-        ),
-        const Flexible(flex: 2, child: SizedBox()),
-      ],
+    return DateTimeFormField(
+      initialValue: accountStaging["dateOfBirth"],
+      pickerPlatform: DateTimeFieldPickerPlatform.material,
+      mode: DateTimeFieldPickerMode.date,
+      firstDate: DateTime.parse("1900-01-01"),
+      lastDate: DateTime.now(),
+      decoration: const InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: "Date of Birth",
+      ),
+      style: Theme.of(context).textTheme.bodyLarge,
+      onChanged: (DateTime? value) {
+        accountStaging["dateOfBirth"] =
+            value ?? DateTime.parse("1899-12-31");
+      },
     );
   }
 }
