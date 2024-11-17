@@ -7,6 +7,7 @@ class PageContent extends StatelessWidget {
   final Widget? titleWidget;
   final EdgeInsets? titlePadding;
   final List<Widget> children;
+  final Widget? child;
   final EdgeInsets childrenPadding;
   final MainAxisSize columnSize;
   final MainAxisAlignment verticalAlignment;
@@ -14,6 +15,7 @@ class PageContent extends StatelessWidget {
   final bool safeAreaTop;
   final bool safeAreaBottom;
   final bool scrollable;
+  final Widget? trailing;
 
   const PageContent(
       {super.key,
@@ -26,10 +28,12 @@ class PageContent extends StatelessWidget {
       this.columnSize = MainAxisSize.max,
       this.safeAreaTop = true,
       this.scrollable = true,
+      this.trailing,
       this.safeAreaBottom = false})
-      : titleWidget = null;
+      : titleWidget = null,
+        child = null;
 
-  const PageContent.withTitleWidget(
+  const PageContent.withTitleWidget( 
       {super.key,
       this.titleWidget,
       this.titlePadding,
@@ -41,7 +45,25 @@ class PageContent extends StatelessWidget {
       this.safeAreaTop = true,
       this.scrollable = true,
       this.safeAreaBottom = false})
-      : title = null;
+      : title = null,
+        trailing = null,
+        child = null;
+
+  const PageContent.withChildWidget(
+      {super.key,
+      this.title,
+      this.titlePadding,
+      this.child = const Placeholder(),
+      this.childrenPadding = comfortableListChildren,
+      this.verticalAlignment = MainAxisAlignment.start,
+      this.horizontalAlignment = CrossAxisAlignment.center,
+      this.columnSize = MainAxisSize.max,
+      this.safeAreaTop = true,
+      this.scrollable = true,
+      this.trailing,
+      this.safeAreaBottom = false})
+      : children = const [],
+        titleWidget = null;
 
   @override
   Widget build(BuildContext context) {
@@ -58,8 +80,17 @@ class PageContent extends StatelessWidget {
                 padding: titlePadding,
               )
             : title != null
-                ? PageTitle(
-                    title,
+                ? PageTitle.withTitleWidget(
+                    Row(
+                      children: [
+                        Expanded(
+                            child: Text(
+                          title!,
+                          style: pageTitle(context),
+                        )),
+                        trailing ?? nothing
+                      ],
+                    ),
                     padding: titlePadding,
                   )
                 : nothing,
@@ -74,7 +105,7 @@ class PageContent extends StatelessWidget {
         top: safeAreaTop,
         bottom: safeAreaBottom,
         child: scrollable
-            ? SingleChildScrollView(
+            ? child ?? SingleChildScrollView(
                 child: column,
               )
             : column);

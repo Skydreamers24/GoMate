@@ -7,18 +7,33 @@ const int adaptiveWidthWideThreshold = 1300;
 
 TextStyle pageTitle(BuildContext context) {
   final theme = Theme.of(context);
-  return (theme.textTheme.headlineLarge ?? const TextStyle()).copyWith(fontWeight: FontWeight.bold);
+  return (theme.textTheme.headlineLarge ?? const TextStyle())
+      .copyWith(fontWeight: FontWeight.bold);
 }
 
 TextStyle heading(BuildContext context) {
   final theme = Theme.of(context);
-  return (theme.textTheme.titleLarge ?? const TextStyle()).copyWith(fontWeight: FontWeight.bold);
+  return (theme.textTheme.titleLarge ?? const TextStyle())
+      .copyWith(fontWeight: FontWeight.bold);
 }
 
 TextStyle subheading(BuildContext context) {
   final theme = Theme.of(context);
   return (theme.textTheme.bodyLarge ?? const TextStyle())
       .copyWith(color: theme.colorScheme.primary, fontWeight: FontWeight.bold);
+}
+
+TextStyle title(BuildContext context) {
+  final theme = Theme.of(context);
+  return (theme.textTheme.bodyLarge ?? const TextStyle())
+      .copyWith(fontSize: 18);
+}
+
+TextStyle body(BuildContext context) {
+  final theme = Theme.of(context);
+  final bodyMedium =
+      theme.textTheme.bodyMedium ?? const TextStyle(color: Colors.black);
+  return bodyMedium.copyWith(color: lessIntense(bodyMedium.color!, theme));
 }
 
 TextStyle data(BuildContext context) {
@@ -86,7 +101,8 @@ Color foreground(Color background) =>
     background.computeLuminance() > 0.5 ? Colors.black : Colors.white;
 Color inverted(Color color) => Color.fromARGB(
     color.alpha, 255 - color.red, 255 - color.green, 255 - color.blue);
-Color darker(Color color, [double amount = .1]) {
+
+Color darker(Color color, [double amount = 0.3]) {
   assert(amount >= 0 && amount <= 1);
 
   final hsl = HSLColor.fromColor(color);
@@ -95,13 +111,25 @@ Color darker(Color color, [double amount = .1]) {
   return hslDark.toColor();
 }
 
-Color lighter(Color color, [double amount = .1]) {
+Color lighter(Color color, [double amount = 0.3]) {
   assert(amount >= 0 && amount <= 1);
 
   final hsl = HSLColor.fromColor(color);
   final hslLight = hsl.withLightness((hsl.lightness + amount).clamp(0.0, 1.0));
 
   return hslLight.toColor();
+}
+
+Color moreIntense(Color color, ThemeData theme, [double amount = 0.3]) {
+  return theme.isDarkMode ? lighter(color, amount) : darker(color, amount);
+}
+
+Color lessIntense(Color color, ThemeData theme, [double amount = 0.3]) {
+  return theme.isDarkMode ? darker(color, amount) : lighter(color, amount);
+}
+
+Color textColor(ThemeData theme) {
+  return theme.textTheme.bodyMedium!.color!;
 }
 
 const supportedLocales = [Locale('en', 'US'), Locale('zh', 'HK')];
@@ -111,10 +139,12 @@ const localizationsDelegates = [
   GlobalCupertinoLocalizations.delegate,
 ];
 const debugShowCheckedModeBanner = false;
-const title = "GUTolution";
+const appName = "GoMate";
 
 const nothingKey = Key("_nothing");
-const nothing = SizedBox.shrink(key: nothingKey,);
+const nothing = SizedBox.shrink(
+  key: nothingKey,
+);
 
 extension IsNothing on Widget {
   // Does not work
