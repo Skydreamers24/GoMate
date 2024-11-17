@@ -7,30 +7,18 @@ enum Disability {
   speech,
   intellectual,
   chronic,
-  allergy,
-  none;
+  allergy;
 
   static Disability fromString(String s) {
-    switch (s) {
-      case "Hearing":
-        return Disability.hearing;
-      case "Physical":
-        return Disability.mobility;
-      case "Visual":
-        return Disability.visual;
-      case "Speech":
-        return Disability.speech;
-      case "Intellectual":
-        return Disability.intellectual;
-      case "Chronic":
-        return Disability.chronic;
-      case "Allergy":
-        return Disability.allergy;
-      case "None":
-        return Disability.none;
-      default:
-        return Disability.none;
-    }
+    return const {
+      "Hearing": Disability.hearing,
+      "Mobility": Disability.mobility,
+      "Visual": Disability.visual,
+      "Speech": Disability.speech,
+      "Intellectual": Disability.intellectual,
+      "Chronic illness": Disability.chronic,
+      "Allergy": Disability.allergy,
+    } [s] ?? Disability.visual;
   }
 
   @override
@@ -42,9 +30,8 @@ enum Disability {
           Disability.intellectual: "Intellectual",
           Disability.allergy: "Allergy",
           Disability.speech: "Speech",
-          Disability.chronic: "Chronic",
-        }[this] ??
-        "";
+          Disability.chronic: "Chronic illness",
+        } [this] ?? "Visual";
   }
 
   IconData icon() {
