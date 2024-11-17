@@ -78,10 +78,7 @@ class _AuthGateState extends State<AuthGate> {
                   onSave: update,
                 );
               }
-              return AuthInfo(
-                  uid: uid,
-                  email: email,
-                  child: widget.child);
+              return AuthInfo(uid: uid, email: email, child: widget.child);
             });
       },
     );
@@ -92,10 +89,7 @@ class AuthInfo extends InheritedWidget {
   final String uid;
   final String email;
   const AuthInfo(
-      {super.key,
-      this.uid = "",
-      this.email = "",
-      required super.child});
+      {super.key, this.uid = "", this.email = "", required super.child});
   static AuthInfo of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<AuthInfo>()!;
   }

@@ -1,15 +1,12 @@
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:gomate/widgets/other/profile_image_edit_box.dart';
 import 'package:i18n_extension/i18n_extension.dart';
-import 'package:image_picker/image_picker.dart';
 
 import 'package:gomate/backend/database.dart';
 import 'package:gomate/backend/account.dart';
 import 'package:gomate/misc/name.dart';
 import 'package:gomate/misc/values.dart';
 import 'package:gomate/widgets/other/adaptive.dart';
-import 'package:gomate/widgets/other/profile_image.dart';
 import 'package:gomate/widgets/other/form_fields.dart';
 
 class EditProfilePage extends StatefulWidget {
@@ -51,6 +48,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     accountStaging["phoneNo"] = account.phoneNo;
     accountStaging["gender"] = account.gender;
     accountStaging["profileImage"] = account.profileImage;
+    accountStaging["disabilities"] = account.disabilities;
   }
 
   void setProfileImage(String profileImage) {
@@ -100,6 +98,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 ? ""
                 : null,
         accountStaging: accountStaging,
+      ),
+      const Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Icon(Icons.accessibility),
+          Text("Disability information")
+        ],
+      ),
+      DisabilitiesField(
+        accountStaging: accountStaging,
       )
     ];
   }
@@ -137,7 +146,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           gender: accountStaging["gender"],
                           profileImage: accountStaging["profileImage"],
                           age: accountStaging["age"],
-                          dateOfBirth: accountStaging["dateOfBirth"]));
+                          dateOfBirth: accountStaging["dateOfBirth"],
+                          disabilities: accountStaging["disabilities"]));
+
                       setDidSubmit(true);
                       widget.onSave();
                       if (widget.hasBackButton) {
@@ -216,13 +227,23 @@ class _EditProfilePageVerticalState extends State<EditProfilePageVertical> {
                     });
                   }),
             ),
-            Column(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                for (var widget in widget.widgets(context))
-                  Padding(
-                    padding: comfortableListChildren,
-                    child: widget,
-                  )
+                const Flexible(flex: 2, child: nothing),
+                Flexible(
+                  flex: 11,
+                  child: Column(
+                    children: [
+                      for (var widget in widget.widgets(context))
+                        Padding(
+                          padding: comfortableListChildren,
+                          child: widget,
+                        )
+                    ],
+                  ),
+                ),
+                const Flexible(flex: 2, child: nothing)
               ],
             )
           ],
@@ -288,13 +309,23 @@ class _EditProfilePageHorizontalState extends State<EditProfilePageHorizontal> {
                 ),
                 Flexible(
                   flex: 3,
-                  child: Column(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
                     children: [
-                      for (var widget in widget.widgets(context))
-                        Padding(
-                          padding: comfortableListChildren,
-                          child: widget,
-                        )
+                      const Flexible(flex: 2, child: nothing),
+                      Flexible(
+                        flex: 9,
+                        child: Column(
+                          children: [
+                            for (var widget in widget.widgets(context))
+                              Padding(
+                                padding: comfortableListChildren,
+                                child: widget,
+                              )
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 )
@@ -302,85 +333,6 @@ class _EditProfilePageHorizontalState extends State<EditProfilePageHorizontal> {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class ProfileImageEditBox extends StatefulWidget {
-  const ProfileImageEditBox(
-      {super.key,
-      required this.profileImage,
-      required this.unsetProfileImage,
-      required this.onProfileImageChanged});
-
-  final String profileImage;
-  final void Function() unsetProfileImage;
-  final void Function(String) onProfileImageChanged;
-
-  @override
-  State<ProfileImageEditBox> createState() => _ProfileImageEditBoxState();
-}
-
-class _ProfileImageEditBoxState extends State<ProfileImageEditBox> {
-  @override
-  Widget build(BuildContext context) {
-    final account = Account.of(context);
-    return SizedBox(
-      width: 221,
-      height: 260,
-      child: Stack(
-        children: [
-          Padding(
-            padding: comfortable,
-            child: ProfileImage(
-              heroTag: "profileImage",
-              profileImage: widget.profileImage,
-            ),
-          ),
-          Align(
-              alignment: Alignment.topRight,
-              child: SizedBox(
-                width: 40,
-                height: 40,
-                child: IconButton(
-                  onPressed: widget.unsetProfileImage,
-                  icon: const Icon(Icons.delete_forever),
-                  style: const ButtonStyle(
-                      backgroundColor: WidgetStatePropertyAll(Colors.redAccent),
-                      foregroundColor: WidgetStatePropertyAll(Colors.white)),
-                ),
-              )),
-          Align(
-              alignment: Alignment.bottomRight,
-              child: SizedBox(
-                width: 40,
-                height: 40,
-                child: IconButton.filled(
-                  onPressed: () async {
-                    var result = await ImagePicker()
-                        .pickImage(source: ImageSource.gallery);
-                    if (kIsWeb) {
-                      if (result != null) {
-                        final storageRef = FirebaseStorage.instance.ref();
-                        var profileImageRef =
-                            storageRef.child("profileImages/${account.uid}");
-                        await profileImageRef
-                            .putData(await result.readAsBytes());
-                        final downloadURL =
-                            await profileImageRef.getDownloadURL();
-                        widget.onProfileImageChanged(downloadURL);
-                      }
-                      return;
-                    }
-                    if (result != null) {
-                      widget.onProfileImageChanged(result.path);
-                    }
-                  },
-                  icon: const Icon(Icons.edit),
-                ),
-              )),
-        ],
       ),
     );
   }
