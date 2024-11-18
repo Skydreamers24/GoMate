@@ -75,9 +75,9 @@ class _UserCardBackState extends State<UserCardBack> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                        constraints: const BoxConstraints(maxHeight: 30),
-                        child: SvgPicture.asset("assets/logo_text.svg")),
+                    // Container(
+                    //     constraints: const BoxConstraints(maxHeight: 30),
+                    //     child: SvgPicture.asset("assets/logo_text.svg")),
                   ],
                 ),
               ),

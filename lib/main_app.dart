@@ -6,13 +6,13 @@ import 'package:gomate/pages/plan_page.dart';
 import 'package:gomate/widgets/other/adaptive.dart';
 
 enum AppPage {
-  home, plan, account;
+  plan, account;
 
   @override
   String toString() {
     switch (this) {
-      case home:
-        return "Home";
+      // case home:
+      //   return "Home";
       case plan:
         return "Plan";
       case account:
@@ -23,8 +23,8 @@ enum AppPage {
   Icon icon(bool isActive, ThemeData theme) {
     IconData iconData = () {
       switch (this) {
-        case home:
-          return isActive ? Icons.home : Icons.home_outlined;
+        // case home:
+        //   return isActive ? Icons.home : Icons.home_outlined;
         case plan:
           return isActive ? Icons.search : Icons.search_outlined;
         case account:
@@ -39,8 +39,8 @@ enum AppPage {
 
   Widget content() {
     switch (this) {
-      case home:
-        return const HomePage();
+      // case home:
+      //   return const HomePage();
       case plan:
         return const PlanPage();
       case account:
@@ -54,7 +54,7 @@ class MainApp extends StatefulWidget {
 
   int get pageIndex => page.index;
 
-  MainApp({super.key, this.page = AppPage.home});
+  MainApp({super.key, this.page = AppPage.plan});
 
   final List<Widget> pageContents =
       AppPage.values.map((page) => page.content()).toList();
@@ -64,7 +64,7 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
-  AppPage page = AppPage.home;
+  AppPage page = AppPage.plan;
 
   void changePage(int value) {
     setState(() {

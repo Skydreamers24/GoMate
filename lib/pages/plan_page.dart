@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gomate/backend/account.dart';
+import 'package:gomate/backend/database.dart';
 import 'package:gomate/misc/journey.dart';
 import 'package:gomate/misc/show_popup.dart';
 import 'package:gomate/misc/values.dart';
@@ -14,6 +15,7 @@ class PlanPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final account = Account.of(context);
     final plannedJourneyIds = Account.of(context).plannedJourneyIds;
     return StreamBuilder(
         stream: FirebaseFirestore.instance
@@ -56,44 +58,21 @@ class PlanPage extends StatelessWidget {
             ),
             children: [
               const SizedBox(),
-              for (final journeyId in plannedJourneyIds)
+              for (final (index, journeyId) in plannedJourneyIds.indexed)
                 JourneyCard(
                   journey: journeys[journeyId]!,
                   maxLines: 3,
+                  actions: [
+                    // FilledButton.icon(onPressed: () {
+                    //   final newPlannedJourneyIds = List<String>.from(account.plannedJourneyIds);
+                    //   newPlannedJourneyIds.removeAt(index);
+                    //   toDatabaseSync(account.copyWith(plannedJourneyIds: newPlannedJourneyIds));
+                    // }, label: const Text("Remove"), icon: const Icon(Icons.remove),),
+                    FilledButton.icon(onPressed: () {}, label: const Text("Book"), icon: const Icon(Icons.book_online_rounded),)
+                  ],
                 )
             ],
           );
         });
-    // return PageContent.withChildWidget(
-    //   title: "Plan",
-    //   trailing: IconButton.filled(onPressed: () {}, icon: Icon(Icons.add)),
-    //   child: FilteredListView<String>(
-    //     data: ["a", "B", "c"],
-    //     filters: [
-    //       ListFilter(name: "All", test: (str) => true),
-    //       ListFilter(name: "Upper", test: (str) => str.toUpperCase() == str),
-    //       ListFilter(name: "Lower", test: (str) => str.toLowerCase() == str)
-    //     ],
-    //     searchFilter: ListFilter(
-    //         name: "Search",
-    //         test: (pair) => pair.$1.isEmpty
-    //             ? true
-    //             : pair.$1.toLowerCase().contains(pair.$2.toLowerCase())),
-    //     sortOptions: [
-    //       SortOption(
-    //           name: "Alphabetical",
-    //           sortFunction: (str1, str2) =>
-    //               str1.toLowerCase().compareTo(str2.toLowerCase())),
-    //       SortOption(
-    //           name: "Reverse Alphabetical",
-    //           sortFunction: (str1, str2) =>
-    //               -str1.toLowerCase().compareTo(str2.toLowerCase()))
-    //     ],
-    //     builder: (str) => ListTile(
-    //       leading: Icon(Icons.dangerous),
-    //       title: Text(str),
-    //     ),
-    //   ),
-    // );
   }
 }

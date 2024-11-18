@@ -3,6 +3,7 @@ import 'package:gomate/backend/account.dart';
 import 'package:gomate/backend/database.dart';
 import 'package:gomate/misc/journey.dart';
 import 'package:gomate/misc/show_popup.dart';
+import 'package:gomate/misc/sort_option.dart';
 import 'package:gomate/misc/values.dart';
 import 'package:gomate/pages/add_missing_page.dart';
 import 'package:gomate/pages/page_content.dart';
@@ -55,6 +56,19 @@ class AllJourneysPage extends StatelessWidget {
               ListFilter(
                   name: journeyType.toString(),
                   test: (journeyId) => journeys[journeyId]!.type == journeyType)
+          ],
+          sortOptions: [
+            SortOption(
+                name: "Sort by Universal Stay Score",
+                sortFunction: (journeyId1, journeyId2) => journeys[journeyId1]!
+                    .universalStayScore(account.disabilities)
+                    .compareTo(journeys[journeyId2]!
+                        .universalStayScore(account.disabilities))),
+            SortOption(
+                name: "Sort by name",
+                sortFunction: (journeyId1, journeyId2) => journeys[journeyId1]!
+                    .name
+                    .compareTo(journeys[journeyId2]!.name)),
           ],
           builder: (journeyId) => Padding(
             padding: comfortableListChildren,

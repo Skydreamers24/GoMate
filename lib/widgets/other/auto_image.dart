@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 class AutoImage extends StatelessWidget {
   final String image;
   final double cornerRadius;
-  const AutoImage({super.key, this.image = "", this.cornerRadius=0});
+  const AutoImage({super.key, this.image = "", this.cornerRadius = 0});
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return SizedBox.expand(
       child: ClipRRect(
         borderRadius: BorderRadius.circular(cornerRadius),
@@ -17,7 +18,10 @@ class AutoImage extends StatelessWidget {
               ? image.startsWith("https://")
                   ? Image.network(image)
                   : Image.asset(image)
-              : Image.asset("assets/blank.png"),
+              : Container(
+                  decoration: BoxDecoration(
+                      color: theme.colorScheme.surfaceContainerHigh),
+                ),
         ),
       ),
     );

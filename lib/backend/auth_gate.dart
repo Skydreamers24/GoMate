@@ -3,9 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart' hide EmailAuthProvider;
 import 'package:firebase_ui_auth/firebase_ui_auth.dart'
     hide EmailVerifiedAction;
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gomate/backend/account.dart';
-import 'package:gomate/misc/values.dart';
 import 'package:gomate/pages/edit_profile_page.dart';
 
 class AuthGate extends StatefulWidget {
@@ -33,20 +31,6 @@ class _AuthGateState extends State<AuthGate> {
             providers: [
               EmailAuthProvider(),
             ],
-            headerBuilder: (context, constraints, shrinkOffset) => Padding(
-              padding: spacious,
-              child: SizedBox(
-                  width: 100,
-                  height: 100,
-                  child: SvgPicture.asset("assets/logo_square.svg")),
-            ),
-            sideBuilder: (context, constraints) => Padding(
-              padding: spacious,
-              child: SizedBox(
-                  width: 100,
-                  height: 100,
-                  child: SvgPicture.asset("assets/logo_square.svg")),
-            ),
             showPasswordVisibilityToggle: true,
           );
         }
