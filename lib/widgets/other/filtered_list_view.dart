@@ -165,7 +165,7 @@ class _FilteredListViewState<T> extends State<FilteredListView<T>> {
                 }
               },
             ),
-          )
+          ),
         ],
       ),
     );

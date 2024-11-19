@@ -63,11 +63,11 @@ class PlanPage extends StatelessWidget {
                   journey: journeys[journeyId]!,
                   maxLines: 3,
                   actions: [
-                    // FilledButton.icon(onPressed: () {
-                    //   final newPlannedJourneyIds = List<String>.from(account.plannedJourneyIds);
-                    //   newPlannedJourneyIds.removeAt(index);
-                    //   toDatabaseSync(account.copyWith(plannedJourneyIds: newPlannedJourneyIds));
-                    // }, label: const Text("Remove"), icon: const Icon(Icons.remove),),
+                    FilledButton.icon(onPressed: () {
+                      final newPlannedJourneyIds = List<String>.from(account.plannedJourneyIds);
+                      newPlannedJourneyIds.removeAt(index);
+                      toDatabaseSync(account.copyWith(plannedJourneyIds: newPlannedJourneyIds));
+                    }, label: const Text("Remove"), icon: const Icon(Icons.remove),),
                     FilledButton.icon(onPressed: () {}, label: const Text("Book"), icon: const Icon(Icons.book_online_rounded),)
                   ],
                 )

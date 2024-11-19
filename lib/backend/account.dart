@@ -57,6 +57,7 @@ class Account extends StatelessWidget {
             email: (data["email"] ?? "") as String,
             gender: Gender.fromString((data["gender"] ?? "Male") as String),
             phoneNo: (data["phoneNo"] ?? "") as String,
+            region: (data["region"] ?? "") as String,
             profileImage: (data["profileImage"] ?? "") as String,
             disabilities: disabilities,
             plannedJourneyIds:
@@ -79,6 +80,7 @@ class AccountData extends InheritedWidget {
   final DateTime? dateOfBirth;
   final String email;
   final String phoneNo;
+  final String region;
   final Set<Disability> disabilities;
   final List<String> plannedJourneyIds;
 
@@ -94,6 +96,7 @@ class AccountData extends InheritedWidget {
       this.dateOfBirth,
       this.email = "",
       this.phoneNo = "",
+      this.region = "",
       this.profileImage = "",
       this.disabilities = const {},
       this.plannedJourneyIds = const [],
@@ -119,6 +122,7 @@ class AccountData extends InheritedWidget {
       DateTime? dateOfBirth,
       String? email,
       String? phoneNo,
+      String? region,
       String? profileImage,
       Widget? child,
       Set<Disability>? disabilities,
@@ -130,6 +134,7 @@ class AccountData extends InheritedWidget {
       dateOfBirth: dateOfBirth ?? this.dateOfBirth,
       email: email ?? this.email,
       phoneNo: phoneNo ?? this.phoneNo,
+      region: region ?? this.region,
       disabilities: disabilities ?? this.disabilities,
       profileImage: profileImage ?? this.profileImage,
       plannedJourneyIds: plannedJourneyIds ?? this.plannedJourneyIds,
@@ -149,6 +154,7 @@ class AccountData extends InheritedWidget {
       "dateOfBirth": dateOfBirthConverted,
       "email": email,
       "phoneNo": phoneNo,
+      "region": region,
       "profileImage": profileImage,
       "disabilities": disabilitiesConverted,
       "plannedJourneyIds": plannedJourneyIds,
@@ -163,6 +169,7 @@ class AccountData extends InheritedWidget {
         dateOfBirth != oldWidget.dateOfBirth ||
         email != oldWidget.email ||
         phoneNo != oldWidget.phoneNo ||
+        region != oldWidget.region ||
         disabilities != oldWidget.disabilities ||
         plannedJourneyIds != oldWidget.plannedJourneyIds ||
         uid != oldWidget.uid;
