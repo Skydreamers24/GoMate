@@ -25,6 +25,7 @@ class _ProfileImageEditBoxState extends State<ProfileImageEditBox> {
   @override
   Widget build(BuildContext context) {
     final account = Account.of(context);
+    final theme = Theme.of(context);
     return SizedBox(
       width: 221,
       height: 260,
@@ -45,9 +46,9 @@ class _ProfileImageEditBoxState extends State<ProfileImageEditBox> {
                 child: IconButton(
                   onPressed: widget.unsetProfileImage,
                   icon: const Icon(Icons.delete_forever),
-                  style: const ButtonStyle(
-                      backgroundColor: WidgetStatePropertyAll(Colors.redAccent),
-                      foregroundColor: WidgetStatePropertyAll(Colors.white)),
+                  style: ButtonStyle(
+                      backgroundColor: WidgetStatePropertyAll(theme.colorScheme.errorContainer),
+                      foregroundColor: WidgetStatePropertyAll(theme.colorScheme.onErrorContainer)),
                 ),
               )),
           Align(

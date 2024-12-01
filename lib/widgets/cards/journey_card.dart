@@ -63,6 +63,8 @@ class JourneyCard extends StatelessWidget {
                             "@${journey.location}",
                             textAlign: TextAlign.start,
                             style: subheading(context),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                           )
                         : nothing,
                     Text(

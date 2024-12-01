@@ -19,7 +19,7 @@ class UserCardFront extends StatelessWidget {
           aspectRatio: 1.588,
           elevation: 10,
           backgroundColor: Colors.blueGrey[600],
-          image: SvgPicture.asset("assets/card_face.svg"),
+          image: SvgPicture.asset("assets/cathay_card.svg"),
         ),
         Align(
           alignment: Alignment.bottomCenter,
@@ -69,7 +69,7 @@ class _UserCardBackState extends State<UserCardBack> {
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Flexible(
+              const Flexible(
                 flex: 3,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
