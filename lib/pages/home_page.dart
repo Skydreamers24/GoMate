@@ -3,7 +3,6 @@ import 'package:gomate/misc/journey.dart';
 import 'package:gomate/misc/show_popup.dart';
 import 'package:gomate/misc/values.dart';
 import 'package:gomate/pages/page_content.dart';
-import 'package:gomate/pages/questionaire_page.dart';
 import 'package:gomate/widgets/cards/content_card.dart';
 import 'package:gomate/widgets/cards/journey_card.dart';
 import 'package:gomate/widgets/other/chart.dart';
@@ -88,9 +87,6 @@ class HomePage extends StatelessWidget {
                 "https://a.cdn-hotels.com/gdcs/production116/d593/d4e5cbfe-6d65-4abd-851b-222ff95a3b66.jpg",
             type: JourneyType.activity),
       ),
-      FloatingActionButton.extended(
-          label: const Text("New Trip"),
-          onPressed: showNewPage(context, const QuestionairePage())),
     ];
   }
 
